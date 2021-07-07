@@ -169,7 +169,7 @@ int lock_apply(char* symbol,int remove) {
   return ret;
 }
 
-void cond_printf(int v,char* format,...) {
+void cond_printf_orig(int v,char* format,...) {
   if((v&verbose) == v) {
     va_list list;
     va_start(list,format);
@@ -177,6 +177,14 @@ void cond_printf(int v,char* format,...) {
     va_end(list);
     fflush(stderr);
   }
+}
+
+void cond_printf(int v,char* format,...) {
+    va_list list;
+    va_start(list,format);
+    vfprintf(stderr,format,list);
+    va_end(list);
+    fflush(stderr);
 }
 
 void* alloc(size_t bytes) {
